@@ -1,0 +1,14 @@
+## Interface: 11200
+## Author: Planetree-欧服 Survivors 公会
+## Title: CatPaw
+## Notes: One button feral druid dps
+## Title-zhCN:|CFFFFFF00[职业]|R|CFFFFFFFF德鲁伊|CatPaw
+## Notes-zhCN:|CFFFFFF00猫爪|R|N猫德一键输出
+## X-Repple: 职业
+## Version: 0.1
+
+
+CatPaw.xml
+Bindings.xml
+CatPaw.lua
+localization.lua
