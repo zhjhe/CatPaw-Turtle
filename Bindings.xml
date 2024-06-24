@@ -1,5 +1,5 @@
 <Bindings>
-    <Binding name="Shred" header="CATPAW_PLUGINNAME">
+    <Binding name="Ferocious_Bite" header="CATPAW_PLUGINNAME">
         cat_dps(false, false, false)
     </Binding>
     <Binding name="Rip" header="CATPAW_PLUGINNAME">
