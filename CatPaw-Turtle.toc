@@ -5,7 +5,7 @@
 ## Title-zhCN:|CFFFFFF00[职业]|R|CFFFFFFFF德鲁伊|CatPaw
 ## Notes-zhCN:|CFFFFFF00猫爪|R|N猫德一键输出
 ## X-Repple: 职业
-## Version: 0.1
+## Version: 0.2
 
 
 CatPaw.xml

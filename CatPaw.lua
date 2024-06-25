@@ -8,7 +8,7 @@ function CatPaw_OnLoad()
 
 end
 
-function CatPaw_Command(msg)
+local function CatPaw_Command(msg)
     local _, _, arg1, arg2, arg3 = string.find(msg, "%s?(%w+)%s?(%w+)%s?(%w+)")
     local cmd = string.lower(msg)
 	
@@ -22,11 +22,28 @@ function CatPaw_Command(msg)
 end
 
 
-local function buffed(buff, unit)
+local function buffed(name, unit)
     unit = unit or 'player'
+
+	local textures = {
+		[Clear_Cast] = 'Interface\\Icons\\Spell_Shadow_ManaBurn',
+		[Berserk] = 'Interface\\Icons\\Ability_Druid_Berserk',
+		[Rip] = 'Interface\\Icons\\Ability_GhoulFrenzy'
+	}
+
     for i = 1, 32 do
-        if UnitBuff(unit, i) == buff then return true end
+        if UnitBuff(unit, i) == textures[name] then 
+			return true 
+		end
     end
+
+	for i = 1, 32 do
+        if UnitDebuff(unit, i) == textures[name] then 
+			return true 
+		end
+    end
+
+
     return false
 end
 
@@ -60,7 +77,7 @@ end
 
 local function ItemLinkToName(link)
 	if link then
-   	return gsub(link,"^.*%[(.*)%].*$","%1");
+   	return string.gsub(link,"^.*%[(.*)%].*$","%1");
 	end
 end
 
@@ -110,26 +127,25 @@ end
 local function select_skill(use_rip, clear_cast, berserk, tiger_fury, cp, energy)
 	if clear_cast then return Shred end
 	if berserk and tiger_fury then return Shred end
-	local skill = Faerie_Fire_Feal
 	-- 根据连击点选择需要使用的技能
 	if cp < 3 then
 		--if 40 <= energy and energy < 48 then return Claw end
-		if energy >= 48 then skill = Shred end
+		if energy >= 48 then return Shred end
 	elseif cp == 3 then
 		--if 40 <= energy and energy < 48 then return Claw end
-		if 35 <= energy and energy < 63 then skill = Ferocious_Bite end
-		if energy >= 63 then skill = Shred end
+		if 35 <= energy and energy < 63 then return Ferocious_Bite end
+		if energy >= 63 then return Shred end
 	-- 4星时，如果能量大于63则撕碎(此时撕碎后会等2秒回能量打凶猛撕咬)，否则凶猛撕咬
 	elseif cp == 4 then 
-		if 35<= energy and energy < 63 then skill = Ferocious_Bite end
-		if energy >= 63 then skill = Shred end
+		if 35<= energy and energy < 63 then return Ferocious_Bite end
+		if energy >= 63 then return Shred end
 	-- 5星时,能量大于78,可上流血则撕扯，
 	elseif cp == 5 then
-		if use_rip and (not buffed(Rip, 'target')) and energy >= 78 then skill = Rip end
-		if 35<= energy and energy < 63 then skill = Ferocious_Bite end
-		if energy >= 63 then skill = Shred end
+		if use_rip and (not buffed(Rip, 'target')) and energy >= 78 then return Rip end
+		if 35<= energy and energy < 63 then return Ferocious_Bite end
+		if energy >= 63 then return Shred end
 	end	
-	return skill
+	return Faerie_Fire_Feal
 end
 
 
