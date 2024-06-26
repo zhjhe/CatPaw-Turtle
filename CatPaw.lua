@@ -3,21 +3,17 @@ CatPaw = {}
 function CatPaw_OnLoad()
 	this:RegisterEvent("PLAYER_ENTERING_WORLD")
 	this:RegisterEvent("ADDON_LOADED")
-	SlashCmdList['CATPAW'] = CatPaw_Command
 	SLASH_CATPAW1 = '/catdps'
+	SlashCmdList['CATPAW'] = function(msg)
 
-end
-
-local function CatPaw_Command(msg)
-    local _, _, arg1, arg2, arg3 = string.find(msg, "%s?(%w+)%s?(%w+)%s?(%w+)")
-    local cmd = string.lower(msg)
-	
-	if cmd == '' then
-		cat_dps(false, false)
-	end
-
-	if cmd == 'rip' then
-		cat_dps(true, false)
+		local _, _, arg1, arg2, arg3 = string.find(msg, "%s?(%w+)%s?(%w+)%s?(%w+)")
+		local cmd = string.lower(msg)	
+		if cmd == '' then
+			cat_dps(false, false)
+		end
+		if cmd == 'rip' then
+			cat_dps(true, false)
+		end
 	end
 end
 
@@ -33,16 +29,15 @@ local function buffed(name, unit)
 
     for i = 1, 32 do
         if UnitBuff(unit, i) == textures[name] then 
-			return true 
+			return true
 		end
     end
 
 	for i = 1, 32 do
         if UnitDebuff(unit, i) == textures[name] then 
-			return true 
+			return true
 		end
     end
-
 
     return false
 end
@@ -87,7 +82,7 @@ local function cp_get_idol()
 	if idol_link then
 		local name = string.lower(idol_link)
 		return name
-	end 
+	end
 end
 
 
@@ -126,7 +121,8 @@ end
 
 local function select_skill(use_rip, clear_cast, berserk, tiger_fury, cp, energy)
 	if clear_cast then return Shred end
-	if berserk and tiger_fury then return Shred end
+	-- if berserk and tiger_fury then return Shred end
+
 	-- 根据连击点选择需要使用的技能
 	if cp < 3 then
 		--if 40 <= energy and energy < 48 then return Claw end
@@ -144,7 +140,7 @@ local function select_skill(use_rip, clear_cast, berserk, tiger_fury, cp, energy
 		if use_rip and (not buffed(Rip, 'target')) and energy >= 78 then return Rip end
 		if 35<= energy and energy < 63 then return Ferocious_Bite end
 		if energy >= 63 then return Shred end
-	end	
+	end
 	return Faerie_Fire_Feal
 end
 
@@ -154,9 +150,9 @@ local function ready_to_shift(clear_cast, energy, cp, berserk)
 	if cp_get_gcd() > 0.2 then return false end
 	if energy >= 28 then return false end
 	if cp >= 3 and energy >= 15 then return false end
-	if berserk then return false end
-	
-	return true 
+	-- if berserk then return false end
+
+	return true
 end
 
 
