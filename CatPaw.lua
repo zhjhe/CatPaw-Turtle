@@ -90,7 +90,7 @@ local function cp_find_item(item)
 	if not item then return end
 	item = string.lower(ItemLinkToName(item))
 	local link
-	local count, bag
+	local count, bag, slot
 	local totalcount = 0;
 	for i = 0, NUM_BAG_FRAMES do
 		for j = 1, 36 do
@@ -163,12 +163,13 @@ function cat_dps(use_rip, use_mana_potion)
 
 	local clear_cast = buffed(Clear_Cast)
 	local berserk = buffed(Berserk)
+	local tiger_fury = buffed(Tiger_Fury)
 	local cp = GetComboPoints()
 	local energy = UnitMana('player')
 
 	if ready_to_shift(clear_cast, energy, cp, berserk) then return CastSpellByName(Cat_Form) end
 
-	use_idol(Idol_Moonfang) 
+	use_idol(Idol_Moonfang)
 
 	local skill = select_skill(use_rip, clear_cast, berserk, tiger_fury, cp, energy)
 	if cp_spell_ready(skill) then 
